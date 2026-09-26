@@ -31,7 +31,7 @@ def create_LUP(A: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, int]:
             swaps += 1
 
         P = S @ P
-        M_rev = np.eye(N=A.shape[0])
+        M_rev = np.eye(n)
 
         for i in range(k + 1, A.shape[0]):
             mu = U[i, k] / U[k, k]
@@ -83,7 +83,7 @@ def det_from_lu(U: np.ndarray, swaps: int) -> float:
 
 
 def main():
-    M = np.loadtxt("lab1/input.txt")
+    M = np.loadtxt("input.txt")
     A, b = M[:, :-1], M[:, -1]
 
     L, U, P, swaps = create_LUP(A)
@@ -91,6 +91,8 @@ def main():
 
     x = solve_system(L, U, P, b)
     assert np.allclose(A @ x, b)
+
+    x_ref = np.linalg.solve(A, b)
 
     A_inv = inverse_from_lu(L, U, P)
     assert np.allclose(A @ A_inv, np.eye(A.shape[0]))
@@ -113,6 +115,8 @@ def main():
 6)    A @ A^-1 == E: {np.allclose(A @ A_inv, np.eye(A.shape[0]))}
 
 7)    L @ U == P @ A: {np.allclose(L @ U, P @ A)}
+
+8)    Совпадение с эталоном (numpy.linalg.solve): {np.allclose(x, x_ref)}
 """
 
     print(output)
