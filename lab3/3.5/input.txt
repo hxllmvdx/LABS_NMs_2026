@@ -1,0 +1,2 @@
+# X0 Xk h1 h2 for integral of x^2 / (x^3 - 27)
+-2 2 1.0 0.5
